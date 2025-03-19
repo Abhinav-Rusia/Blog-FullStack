@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+body {
+  background-color: #D1E8E2 ;
+  width: 100vw;
+  overflow-x: hidden;
+  font-family: "Quicksand", sans-serif;
+}
