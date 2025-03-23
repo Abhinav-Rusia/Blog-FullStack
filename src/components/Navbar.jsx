@@ -33,8 +33,8 @@ const Navbar = () => {
         <Image
           src="https://ik.imagekit.io/devabhi/logo.png"
           alt={"logo"}
-          width={32}
-          height={32}
+          w={32}
+          h={32}
         />
         <span>Beyond Ink.</span>
       </Link>
