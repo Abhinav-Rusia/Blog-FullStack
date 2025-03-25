@@ -6,11 +6,15 @@ const PostItems = () => {
     <div className="flex flex-col xl:flex-row gap-8">
       {/* Image  */}
       <div className="md:hidden xl:block">
-        <Image
-          src="https://ik.imagekit.io/devabhi/devops.jpg?updatedAt=1742655697816"
-          classname="rounded-2xl object-cover" w="735"
-        />
-      </div>
+      <Image
+        src="https://ik.imagekit.io/devabhi/devops.jpg?updatedAt=1742655697816"
+        alt="DevOps Image"
+        className="rounded-2xl object-cover"
+        width="735"
+        height="400" 
+        priority={false}
+      />
+    </div>
       {/* Details  */}
       <div className="flex flex-col gap-4">
         <Link
