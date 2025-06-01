@@ -41,7 +41,12 @@ const App = () => {
   };
 
   if (loading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <div className="flex justify-center items-center h-screen text-forest-green">Loading...</div>;
+  }
+
+  // Debug: Log environment variables in development
+  if (import.meta.env.DEV) {
+    console.log('API URL:', import.meta.env.VITE_API_URL);
   }
 
   return (
