@@ -12,10 +12,9 @@ const commentSchema = new Schema(
       ref: "Post",
       required: true,
     },
-    desc: {
+    content: {
       type: String,
       required: true,
-      trim: true,
     },
   },
   { timestamps: true }

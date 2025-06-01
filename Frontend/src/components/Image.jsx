@@ -1,24 +1,19 @@
-import { IKImage } from "imagekitio-react";
-
 const Image = ({ src, className, alt, w, h }) => {
   return (
-    <IKImage
-      urlEndpoint={import.meta.env.VITE_IK_URL_ENDPOINT}
-      // path="/logo.png"
+    <img
       src={src}
       className={className}
-      loading="lazy"
-      lqip={{ active: true, quality: 20 }}
       alt={alt}
       width={w}
       height={h}
-      transformation={[
-        {
-          width: w,
-          height: h,
-        },
-      ]}
+      loading="lazy"
+      style={{
+        objectFit: 'cover',
+        width: w ? `${w}px` : 'auto',
+        height: h ? `${h}px` : 'auto'
+      }}
     />
   );
 };
+
 export default Image;

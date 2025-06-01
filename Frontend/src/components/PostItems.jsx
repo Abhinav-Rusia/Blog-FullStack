@@ -1,44 +1,75 @@
 import { Link } from "react-router-dom";
 import Image from "./Image";
 
-const PostItems = () => {
+const PostItems = ({ post }) => {
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
   return (
     <div className="flex flex-col xl:flex-row gap-8">
-      {/* Image  */}
-      <div className="md:hidden xl:block">
-      <Image
-        src="https://ik.imagekit.io/devabhi/devops.jpg?updatedAt=1742655697816"
-        alt="DevOps Image"
-        className="rounded-2xl object-cover"
-        width="735"
-        height="400" 
-        priority={false}
-      />
-    </div>
-      {/* Details  */}
-      <div className="flex flex-col gap-4">
-        <Link
-          to="/test"
-          className="hover:text-blue-800 transition duration-200 text-3xl font-semibold"
-        >
-          Unlocking the Future of DevOps: How AI is Supercharging Software
-          Delivery Like Never Before!
-        </Link>
-        <div className="flex items-center gap-2 text-gray-500 text-sm">
-          <span>Written By</span>
-          <Link className="text-blue-800">Abhinav Rusia</Link>
-          <span>on</span>
-          <Link className="text-blue-800">DevOps</Link>
-          <span>2 days ago</span>
+      {/* Image */}
+      {post.img && (
+        <div className="md:hidden xl:block xl:w-1/3">
+          <Image
+            src={post.img}
+            alt={post.title}
+            className="rounded-2xl object-cover w-full h-64"
+            w="400"
+            h="250"
+          />
         </div>
-        <p>
-          AI and automation are revolutionizing DevOps, but how will they shape
-          the future of software delivery? Faster releases, smarter
-          processes—what’s next for DevOps? The game is about to change.
-        </p>
-        <Link to="/test" className="underline text-sm text-blue-800">Read more</Link>
+      )}
+      
+      {/* Details */}
+      <div className="flex flex-col gap-4 flex-1">
+        <Link
+          to={`/${post.slug}`}
+          className="hover:text-blue-800 transition duration-200 text-2xl md:text-3xl font-semibold text-forest-green"
+        >
+          {post.title}
+        </Link>
+
+        <div className="flex items-center gap-2 text-forest-green-light text-sm">
+          <span>Written by</span>
+          <span className="text-blue-800 font-medium">{post.user.name || 'Unknown Author'}</span>
+          <span>on</span>
+          <span className="text-blue-800 capitalize">{post.category}</span>
+          <span>{formatDate(post.createdAt)}</span>
+        </div>
+
+        {post.desc && (
+          <p className="text-forest-green leading-relaxed">
+            {post.desc}
+          </p>
+        )}
+        
+        {post.tags && post.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {post.tags.slice(0, 3).map((tag, index) => (
+              <span key={index} className="bg-gray-100 text-forest-green px-2 py-1 rounded text-sm">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <div className="flex items-center justify-between">
+          <Link
+            to={`/${post.slug}`}
+            className="text-blue-800 hover:text-blue-600 font-medium"
+          >
+            Read more →
+          </Link>
+          <span className="text-forest-green-light text-sm">{post.visit} views</span>
+        </div>
       </div>
     </div>
   );
 };
+
 export default PostItems;

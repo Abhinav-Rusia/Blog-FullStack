@@ -13,21 +13,26 @@ const postSchema = new Schema(
     title: {
       type: String,
       required: true,
-      trim: true,
     },
     slug: {
       type: String,
       required: true,
       unique: true,
-      index: true,
     },
     desc: {
       type: String,
-      trim: true,
     },
     content: {
       type: String,
       required: true,
+    },
+    tags: {
+      type: [String],
+      default: [],
+    },
+    category: {
+      type: String,
+      default: "general",
     },
     isFeatured: {
       type: Boolean,
