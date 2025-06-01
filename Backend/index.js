@@ -11,8 +11,17 @@ dotenv.config();
 
 const app = express();
 
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production'
+    ? [process.env.FRONTEND_URL, 'https://your-frontend.vercel.app']
+    : ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
 // Basic middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes
@@ -23,7 +32,15 @@ app.use("/api/upload", uploadRouter);
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// Connect to database
+connectDB();
+
+// For Vercel deployment
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+// Export the app for Vercel
+export default app;

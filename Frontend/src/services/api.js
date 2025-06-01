@@ -2,6 +2,17 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
+// Add request interceptor for better error handling in production
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.code === 'NETWORK_ERROR') {
+      console.error('Network error - check if backend is running');
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Simple function to get headers with token
 const getHeaders = () => {
   const token = localStorage.getItem('token');
