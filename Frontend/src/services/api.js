@@ -1,11 +1,41 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// Ensure API_URL always ends with /api
+const getApiUrl = () => {
+  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+  // If the URL doesn't end with /api, add it
+  if (!baseUrl.endsWith('/api')) {
+    return baseUrl + '/api';
+  }
+  return baseUrl;
+};
+
+const API_URL = getApiUrl();
+
+// Debug: Log the API URL in development
+if (import.meta.env.DEV) {
+  console.log('🔗 API URL:', API_URL);
+}
 
 // Add request interceptor for better error handling in production
-axios.interceptors.response.use(
-  (response) => response,
+axios.interceptors.request.use(
+  (config) => {
+    console.log('🚀 Making request to:', config.url);
+    return config;
+  },
   (error) => {
+    console.error('❌ Request error:', error);
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => {
+    console.log('✅ Response received from:', response.config.url);
+    return response;
+  },
+  (error) => {
+    console.error('❌ Response error:', error.response?.status, error.response?.data || error.message);
     if (error.code === 'NETWORK_ERROR') {
       console.error('Network error - check if backend is running');
     }

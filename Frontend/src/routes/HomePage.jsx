@@ -9,7 +9,7 @@ const HomePage = ({ user }) => {
   return (
     <div className="mt-4 flex flex-col gap-4">
       {/* Debug info - remove this after fixing */}
-      {import.meta.env.DEV && <Debug />}
+      <Debug />
 
       {/* <BreadCrumb /> */}
       <div className="flex gap-4">
