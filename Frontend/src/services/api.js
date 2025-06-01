@@ -12,30 +12,10 @@ const getApiUrl = () => {
 
 const API_URL = getApiUrl();
 
-// Debug: Log the API URL in development
-if (import.meta.env.DEV) {
-  console.log('🔗 API URL:', API_URL);
-}
-
-// Add request interceptor for better error handling in production
-axios.interceptors.request.use(
-  (config) => {
-    console.log('🚀 Making request to:', config.url);
-    return config;
-  },
-  (error) => {
-    console.error('❌ Request error:', error);
-    return Promise.reject(error);
-  }
-);
-
+// Add error handling interceptor
 axios.interceptors.response.use(
-  (response) => {
-    console.log('✅ Response received from:', response.config.url);
-    return response;
-  },
+  (response) => response,
   (error) => {
-    console.error('❌ Response error:', error.response?.status, error.response?.data || error.message);
     if (error.code === 'NETWORK_ERROR') {
       console.error('Network error - check if backend is running');
     }

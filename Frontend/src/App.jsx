@@ -44,11 +44,6 @@ const App = () => {
     return <div className="flex justify-center items-center h-screen text-forest-green">Loading...</div>;
   }
 
-  // Debug: Log environment variables in development
-  if (import.meta.env.DEV) {
-    console.log('API URL:', import.meta.env.VITE_API_URL);
-  }
-
   return (
     <Router>
       <div className='px-4 md:px-8 lg:px-16 xl:px-32 2xl:64'>

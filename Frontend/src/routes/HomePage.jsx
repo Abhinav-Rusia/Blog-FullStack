@@ -2,15 +2,11 @@ import { Link } from "react-router-dom";
 import MainCategories from "../components/MainCategories";
 import FeaturedPosts from "../components/FeaturedPosts";
 import PostLists from "../components/PostLists";
-import Debug from "../components/Debug";
 
 const HomePage = ({ user }) => {
 
   return (
     <div className="mt-4 flex flex-col gap-4">
-      {/* Debug info - remove this after fixing */}
-      <Debug />
-
       {/* <BreadCrumb /> */}
       <div className="flex gap-4">
         <Link to="/" className="text-forest-green">Home</Link>
