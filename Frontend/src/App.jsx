@@ -9,6 +9,9 @@ import SinglePostPage from "./routes/SinglePostPage";
 import Dashboard from "./routes/Dashboard";
 import EditPost from "./routes/EditPost";
 import PostsPage from "./routes/PostsPage";
+import AboutPage from "./routes/AboutPage";
+import TrendingPage from "./routes/TrendingPage";
+import MostPopularPage from "./routes/MostPopularPage";
 
 const App = () => {
   // Simple user state management
@@ -52,6 +55,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage user={user} />} />
           <Route path="/posts" element={<PostsPage user={user} />} />
+          <Route path="/trending" element={<TrendingPage user={user} />} />
+          <Route path="/popular" element={<MostPopularPage user={user} />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage login={login} />} />
           <Route path="/register" element={<RegisterPage login={login} />} />
           <Route path="/write" element={<Write user={user} />} />

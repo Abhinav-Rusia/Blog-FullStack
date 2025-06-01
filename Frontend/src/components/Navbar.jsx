@@ -24,6 +24,23 @@ const Navbar = ({ user, logout }) => {
     };
   }, []);
 
+  // Prevent body scroll and touch when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+    } else {
+      document.body.style.overflow = 'unset';
+      document.body.style.touchAction = 'auto';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+      document.body.style.touchAction = 'auto';
+    };
+  }, [open]);
+
   const handleLogout = () => {
     logout();
     setUserMenuOpen(false);
@@ -45,7 +62,7 @@ const Navbar = ({ user, logout }) => {
 
       {/* MOBILE MENU */}
 
-      <div className="md:hidden">
+      <div className="md:hidden" ref={menuRef}>
         <div
           className="cursor-pointer text-2xl text-forest-green"
           onClick={() => setOpen((prev) => !prev)}
@@ -55,20 +72,24 @@ const Navbar = ({ user, logout }) => {
 
         {/* Mobile Links  */}
         <div
-          className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg absolute top-16 bg-[#D1E8E2] transition-all duration-300 ease-in-out ${
-            open ? "-right-0" : "-right-full"
+          className={`w-full h-screen flex flex-col items-center justify-center gap-8 font-medium text-lg fixed top-16 left-0 bg-[#D1E8E2] z-50 transform transition-transform duration-300 ease-in-out ${
+            open ? "translate-x-0" : "translate-x-full"
           }`}
+          style={{
+            touchAction: open ? 'auto' : 'none',
+            pointerEvents: open ? 'auto' : 'none'
+          }}
         >
-          <Link to="/" onClick={() => setOpen(false)} className="text-forest-green">
+          <Link to="/" onClick={() => setOpen(false)} className="text-forest-green hover:text-blue-800 transition-colors">
             Home
           </Link>
-          <Link to="/" onClick={() => setOpen(false)} className="text-forest-green">
+          <Link to="/trending" onClick={() => setOpen(false)} className="text-forest-green hover:text-blue-800 transition-colors">
             Trending
           </Link>
-          <Link to="/" onClick={() => setOpen(false)} className="text-forest-green">
+          <Link to="/popular" onClick={() => setOpen(false)} className="text-forest-green hover:text-blue-800 transition-colors">
             Most Popular
           </Link>
-          <Link to="/" onClick={() => setOpen(false)} className="text-forest-green">
+          <Link to="/about" onClick={() => setOpen(false)} className="text-forest-green hover:text-blue-800 transition-colors">
             About
           </Link>
           {user ? (
@@ -102,10 +123,10 @@ const Navbar = ({ user, logout }) => {
       {/* DESKTOP MENU  */}
 
       <div className="hidden md:flex items-center gap-8 xl:gap-12 font-medium">
-        <Link to="/" className="text-forest-green">Home</Link>
-        <Link to="/" className="text-forest-green">Trending</Link>
-        <Link to="/" className="text-forest-green">Most Popular</Link>
-        <Link to="/" className="text-forest-green">About</Link>
+        <Link to="/" className="text-forest-green hover:text-blue-800 transition-colors">Home</Link>
+        <Link to="/trending" className="text-forest-green hover:text-blue-800 transition-colors">Trending</Link>
+        <Link to="/popular" className="text-forest-green hover:text-blue-800 transition-colors">Most Popular</Link>
+        <Link to="/about" className="text-forest-green hover:text-blue-800 transition-colors">About</Link>
 
         {user ? (
           <div className="flex items-center gap-4">
