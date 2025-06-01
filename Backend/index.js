@@ -11,21 +11,21 @@ dotenv.config();
 
 const app = express();
 
-// CORS configuration for production
-const corsOptions = {
-  origin: process.env.NODE_ENV === 'production'
-    ? [process.env.FRONTEND_URL, 'https://your-frontend.vercel.app']
-    : ['http://localhost:5173', 'http://localhost:3000'],
+app.use(cors({
+  origin: true, 
   credentials: true,
-  optionsSuccessStatus: 200
-};
-
-// Basic middleware
-app.use(cors(corsOptions));
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 
-app.use("/", (req, res) => {
-  res.send("API is Working");
+// Health check route
+app.get("/", (_req, res) => {
+  res.json({
+    message: "Blog API is running!",
+    status: "success",
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Routes

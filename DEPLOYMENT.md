@@ -66,16 +66,16 @@ This guide will help you deploy your full-stack blog application to Vercel.
 
 ## 🔧 Post-Deployment Configuration
 
-### Update CORS Settings
+### Optional: Restrict CORS (Recommended for Production)
 
-Your backend is now deployed, but you need to update CORS settings to allow your frontend domain.
+The backend is configured to allow all origins initially. For better security, you can restrict CORS later:
 
-1. Go to your backend Vercel deployment
-2. In the Vercel dashboard, go to Settings > Environment Variables
-3. Add or update:
+1. Go to your backend code in `Backend/index.js`
+2. Replace `origin: true` with specific domains:
+   ```javascript
+   origin: ['https://your-frontend.vercel.app', 'https://your-custom-domain.com']
    ```
-   FRONTEND_URL=https://your-frontend.vercel.app
-   ```
+3. Commit and redeploy
 
 ### Test Your Deployment
 
